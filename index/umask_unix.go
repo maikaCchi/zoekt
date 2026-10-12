@@ -1,0 +1,16 @@
+//go:build !windows
+
+package index
+
+import (
+	"os"
+
+	"golang.org/x/sys/unix"
+)
+
+var umask os.FileMode
+
+func init() {
+	umask = os.FileMode(unix.Umask(0))
+	unix.Umask(int(umask))
+}
